@@ -2,18 +2,18 @@
 #include <PS4Controller.h>
 
 // ピン番号の設定
-const int p1A = 21;
+const int p1A = 23;
 const int p1B = 22;
-const int p1PWM = 23;
-const int p2A = 5;
+const int p1PWM = 21;
+const int p2A = 19;
 const int p2B = 18;
-const int p2PWM = 19;
-const int p3A = 4;
+const int p2PWM = 5;
+const int p3A = 17;
 const int p3B = 16;
-const int p3PWM = 17;
-const int p4A = 15;
+const int p3PWM = 4;
+const int p4A = 0;
 const int p4B = 2;
-const int p4PWM = 0;
+const int p4PWM = 15;
 
 // プロトタイプ宣言
 void output(int pinA, int pinB, int pinPWM, int order);
@@ -43,7 +43,7 @@ void setup()
   Serial.begin(115200);
 
   // PS4コントローラーとの接続
-  PS4.begin("CC:DB:A7:49:40:A2");
+  PS4.begin("xx:xx:xx:xx:xx:xx");
   Serial.println("Ready.");
 }
 
@@ -120,19 +120,36 @@ void output(int pinA, int pinB, int pinPWM, int order) // 引数：ピン番号�
   {
     digitalWrite(pinA, HIGH);
     digitalWrite(pinB, LOW);
-    analogWrite(pinPWM, 40);
+    analogWrite(pinPWM, 255);
   }
   else if (order == 2) // 命令番号が2(逆回転)の場合
   {
     digitalWrite(pinA, LOW);
     digitalWrite(pinB, HIGH);
-    analogWrite(pinPWM, 40);
+    analogWrite(pinPWM, 255);
   }
   else // 命令番号がその他(例えば0)の場合
   {
     digitalWrite(pinA, LOW);
     digitalWrite(pinB, LOW);
     analogWrite(pinPWM, 0);
+  }
+  return;
+}
+
+void output(int pin[3], int power) // 引数：ピン番号と命令番号
+{
+  if (power > 0) // 命令番号が1(正回転)の場合
+  {
+    digitalWrite(pin[0], HIGH);
+    digitalWrite(pin[1], LOW);
+    analogWrite(pin[2], power);
+  }
+  else // 命令番号がその他(例えば0)の場合
+  {
+    digitalWrite(pin[0], LOW);
+    digitalWrite(pin[1], HIGH);
+    analogWrite(pin[2], (-1) * power);
   }
   return;
 }
