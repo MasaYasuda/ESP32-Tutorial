@@ -43,7 +43,7 @@ void setup()
   Serial.begin(115200);
 
   // PS4コントローラーとの接続
-  PS4.begin("CC:DB:A7:49:40:A2");
+  PS4.begin("xx:xx:xx:xx:");
   Serial.println("Ready.");
 }
 
@@ -120,13 +120,13 @@ void output(int pinA, int pinB, int pinPWM, int order) // 引数：ピン番号�
   {
     digitalWrite(pinA, HIGH);
     digitalWrite(pinB, LOW);
-    analogWrite(pinPWM, 40);
+    analogWrite(pinPWM, 60);
   }
   else if (order == 2) // 命令番号が2(逆回転)の場合
   {
     digitalWrite(pinA, LOW);
     digitalWrite(pinB, HIGH);
-    analogWrite(pinPWM, 40);
+    analogWrite(pinPWM, 60);
   }
   else // 命令番号がその他(例えば0)の場合
   {

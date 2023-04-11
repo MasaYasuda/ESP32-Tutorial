@@ -28,7 +28,7 @@ void setup()
   Serial.begin(115200);
 
   // PS4コントローラーとの接続
-  PS4.begin("xx:xx:xx:xx:xx:xx");
+  PS4.begin("xx:xx:xx:xx:");
   Serial.println("Ready.");
 }
 
@@ -87,13 +87,13 @@ void output(const int *pin, int power) // 引数：ピン番号と命令番号
   {
     digitalWrite(pin[0], HIGH);
     digitalWrite(pin[1], LOW);
-    analogWrite(pin[2], power);
+    analogWrite(pin[2], power*60);
   }
   else // 命令番号がその他(例えば0)の場合
   {
     digitalWrite(pin[0], LOW);
     digitalWrite(pin[1], HIGH);
-    analogWrite(pin[2], (-1) * power);
+    analogWrite(pin[2], (-1) * power*60);
   }
   return;
 }
